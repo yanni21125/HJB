@@ -1,1 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Spider-Man Kiosk</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #080808;
+            color: white;
+        }
+
+        /* =========================
+           HERO / BACKGROUND
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0.80)
+                ),
+                url("spiderman-bg.png");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        nav {
+            width: 100%;
+            padding: 20px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(0, 0, 0, 0.75);
+            border-bottom: 2px solid #e21b23;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e21b23;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e21b23;
+        }
+
+        /* =========================
+           HERO CONTENT
+        ========================= */
+
+        .hero-content {
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 70px;
+            color: #e21b23;
+
+            text-shadow:
+                3px 3px 0px #000,
+                0 0 20px rgba(226, 27, 35, 0.8);
+
+            margin-bottom: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            max-width: 650px;
+            line-height: 1.7;
+            font-size: 17px;
+            color: #eeeeee;
+        }
+
+        .start-btn {
+            display: inline-block;
+            margin-top: 30px;
+
+            padding: 15px 35px;
+
+            background: #e21b23;
+            color: white;
+
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 17px;
+
+            border-radius: 5px;
+
+            box-shadow: 0 5px 15px rgba(226, 27, 35, 0.4);
+
+            transition: 0.3s;
+        }
+
+        .start-btn:hover {
+            background: #ffffff;
+            color: #e21b23;
+            transform: scale(1.05);
+        }
+
+        /* =========================
+           GENERAL SECTION
+        ========================= */
+
+        section {
+            padding: 70px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 38px;
+            margin-bottom: 45px;
+            color: #e21b23;
+        }
+
+        .section-title span {
+            color: white;
+        }
+
+        /* =========================
+           IMAGE CARDS
+        ========================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(230px, 1fr));
+
+            gap: 25px;
+        }
+
+        .card {
+            background: #151515;
+
+            border-radius: 10px;
+            overflow: hidden;
+
+            border: 1px solid #333;
+
+            transition: 0.3s;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+
+            border-color: #e21b23;
+
+            box-shadow:
+                0 10px 30px rgba(226, 27, 35, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: #e21b23;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .card-content p {
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =========================
+           FEEDBACK SECTION
+        ========================= */
+
+        .feedback-section {
+            background: #0d0d0d;
+        }
+
+        .feedback-container {
+            max-width: 700px;
+            margin: auto;
+
+            background: #171717;
+
+            padding: 35px;
+
+            border-radius: 10px;
+
+            border: 1px solid #333;
+
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .feedback-container p {
+            text-align: center;
+            color: #cccccc;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+
+            font-weight: bold;
+            color: white;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #444;
+            border-radius: 5px;
+
+            background: #0c0c0c;
+            color: white;
+
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #e21b23;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 5px;
+
+            background: #e21b23;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #ffffff;
+            color: #e21b23;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            background: #050505;
+
+            border-top: 1px solid #333;
+
+            color: #999;
+        }
+
+        footer span {
+            color: #e21b23;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 48px;
+            }
+
+            .hero-content h2 {
+                font-size: 22px;
+            }
+
+            section {
+                padding: 50px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HERO / LANDING PAGE
+    ========================== -->
+
+    <div class="hero" id="home">
+
+        <nav>
+
+            <div class="logo">
+                SPIDER<span>MAN</span>
+            </div>
+
+            <ul>
+                <li>
+                    <a href="#home">HOME</a>
+                </li>
+
+                <li>
+                    <a href="#gallery">GALLERY</a>
+                </li>
+
+                <li>
+                    <a href="#feedback">FEEDBACK</a>
+                </li>
+            </ul>
+
+        </nav>
+
+
+        <div class="hero-content">
+
+            <h1>SPIDER-MAN</h1>
+
+            <h2>Welcome to the Spider-Verse</h2>
+
+            <p>
+                Explore the world of Spider-Man through this interactive
+                kiosk. Discover different versions, suits, abilities,
+                and unforgettable moments from the Spider-Verse.
+            </p>
+
+            <a href="#gallery" class="start-btn">
+                EXPLORE NOW
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GALLERY
+    ========================== -->
+
+    <section id="gallery">
+
+        <h2 class="section-title">
+            SPIDER-MAN <span>GALLERY</span>
+        </h2>
+
+
+        <div class="cards">
+
+
+            <!-- IMAGE 1 -->
+
+            <div class="card">
+
+                <img
+                    src="spiderman-bg.png"
+                    alt="Spider-Man"
+                >
+
+                <div class="card-content">
+
+                    <h3>Spider-Man</h3>
+
+                    <p>
+                        A hero known for his agility, web-slinging
+                        abilities, spider-sense, and strong sense
+                        of responsibility.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE 2 -->
+
+            <div class="card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80"
+                    alt="Superhero city"
+                >
+
+                <div class="card-content">
+
+                    <h3>Spider-Verse</h3>
+
+                    <p>
+                        The Spider-Verse contains different heroes
+                        who share the powers and responsibilities
+                        associated with Spider-Man.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE 3 -->
+
+            <div class="card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=800&q=80"
+                    alt="Hero in action"
+                >
+
+                <div class="card-content">
+
+                    <h3>Hero in Action</h3>
+
+                    <p>
+                        Spider-Man uses speed, agility, and
+                        web-slinging skills to move through the
+                        city and protect others.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE 4 -->
+
+            <div class="card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80"
+                    alt="City at night"
+                >
+
+                <div class="card-content">
+
+                    <h3>New York City</h3>
+
+                    <p>
+                        The city environment is an important part
+                        of Spider-Man's adventures, providing the
+                        setting for many of his heroic activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE 5 -->
+
+            <div class="card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80"
+                    alt="Comic book style"
+                >
+
+                <div class="card-content">
+
+                    <h3>Spider-Man Legacy</h3>
+
+                    <p>
+                        Spider-Man has become one of the most
+                        recognizable superheroes in comic books,
+                        movies, games, and popular culture.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEEDBACK FORM
+    ========================== -->
+
+    <section id="feedback" class="feedback-section">
+
+        <h2 class="section-title">
+            USER <span>FEEDBACK</span>
+        </h2>
+
+
+        <div class="feedback-container">
+
+            <p>
+                Tell us about your experience with our
+                Spider-Man kiosk.
+            </p>
+
+
+            <form onsubmit="submitFeedback(event)">
+
+
+                <!-- INPUT 1 -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- INPUT 2 -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- INPUT 3 -->
+
+                <div class="form-group">
+
+                    <label for="favorite">
+                        Favorite Spider-Man
+                    </label>
+
+                    <input
+                        type="text"
+                        id="favorite"
+                        name="favorite"
+                        placeholder="Who is your favorite?"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- INPUT 4 -->
+
+                <div class="form-group">
+
+                    <label for="rating">
+                        Overall Rating
+                    </label>
+
+                    <select id="rating" name="rating" required>
+
+                        <option value="">
+                            Select a rating
+                        </option>
+
+                        <option value="5">
+                            5 - Excellent
+                        </option>
+
+                        <option value="4">
+                            4 - Very Good
+                        </option>
+
+                        <option value="3">
+                            3 - Good
+                        </option>
+
+                        <option value="2">
+                            2 - Fair
+                        </option>
+
+                        <option value="1">
+                            1 - Needs Improvement
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- INPUT 5 -->
+
+                <div class="form-group">
+
+                    <label for="message">
+                        Your Feedback
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Write your feedback here..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    SUBMIT FEEDBACK
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 <span>Spider-Man Kiosk</span> |
+            Interactive Landing Page
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        function submitFeedback(event) {
+
+            event.preventDefault();
+
+            alert(
+                "Thank you for your feedback! 🕷️"
+            );
+
+            event.target.reset();
+        }
+
+    </script>
+
+</body>
+</html>
